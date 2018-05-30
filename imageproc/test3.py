@@ -10,11 +10,11 @@ import shutil
 # initial window position
 posX = 20
 posY = 20
-
+pepsi = 0
 # example for detect "coke" object function-------------------------------------------------
 def detect4skal(hsv):
     global posX, posY
-
+    global pepsi 
     # create mask image for detection of "coke" object
     # --create mask image for detection of red(upper) area in "coke" label
     rnb_red1 = createMaskImage(hsv, [161, 170], [50, 255], [50, 255])
@@ -23,11 +23,12 @@ def detect4skal(hsv):
     # --create mask image for detection of white area in "Skal" label
     msk_w = createMaskImage(hsv, [55, 90], [0, 50], [200, 255])
     # --create mask image for detection of "coke" object by adding msk_g to msk_b
-    msk_b = createMaskImage(hsv, [110, 130], [0, 255], [50, 170])
+    msk_b = createMaskImage(hsv, [ 105, 130], [170, 255], [90, 170])
     mask = cv2.addWeighted(rnb_red1, 0.1, rnb_red2, 0.1, 0)
-    mask = cv2.addWeighted(msk_b, 1, mask, 0.1, 0)
     mask = cv2.addWeighted(msk_w, 0.1, mask, 1, 0)
-
+    mask = cv2.addWeighted(mask, 0.1, msk_b, 1, 0)
+    
+    #mask = cv2.addWeighted(msk_b, 1, mask, 0.1, 0)
     # show mask image
     #cv2.imshow("only mask", mask)
     cv2.moveWindow("only mask", posX, posY + hsv.shape[0] + 40)
@@ -44,7 +45,7 @@ def detect4skal(hsv):
 
     # edge detection and extract contours
     edge = cv2.Canny(mask, 10, 80)
-    im, contours, hierarchy = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(edge, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # -- show extracted contours with gray line
     cv2.drawContours(mask, contours, -1, (128, 128, 128), 2)
 
@@ -53,16 +54,17 @@ def detect4skal(hsv):
         # -- get information of bounding rect of each contours
         x, y, w, h = cv2.boundingRect(contours[i])
         # -- decide "Skal" object using aspect ratio of bounding area
-        if w*1.8<h and h<w*2.5: # -- is "Skal"
+        if w*2<h  : # -- is "Skal"
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
             strSize = cv2.getTextSize("Skal(full of)", cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)[0]
             cv2.rectangle(img, (x, y-strSize[1]), (x+strSize[0], y), (0, 0, 255), -1)
             cv2.putText(img, "Skal(full of)", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255))
-            pepsi = True
+            pepsiFn = 1
         else: # -- is not "Skal"
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            pepsi = False
-
+            pepsiFn = 0
+        pepsi += pepsiFn
+    
     cv2.imshow("target image", img)
 
     return mask
@@ -110,13 +112,16 @@ def eachdir(e,numPerDir,threads):
             
 
 # main function-----------------------------------------------------------------------------
-def main(x,threads):
-    #global img, cache
+def main(x,numPerDir):
+    global img, cache
     global posX, posY
-        
+    global pepsi
+    imgDir = os.listdir("./new_%s/"%x)   
+    print(imgDir) 
     # read image
     for i in range (numPerDir):
-        img = cv2.imread("new_%s/"%x+imgFile[i])
+        img = cv2.imread("./new_%s/"%x+imgDir[i])
+        #cv2.imshow("origin",img)
         imh, imw, channels = img.shape  # get image size and the number of channels
 
         # pre-processing area ---------------------
@@ -138,15 +143,15 @@ def main(x,threads):
         # convert to HSV (Hue, Saturation, Value(Brightness))
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        cv2.imshow("detect skal", detect4skal(hsv))
+        detect4skal(hsv)
         cv2.moveWindow("detect skal", X, Y)
 
-        if pepsi == True :
-            shutil.copyfile("new_%s/"%x+img[i],"new_%s/"%x)
+        if pepsi >= 2:
+            shutil.copyfile("new_%s/"%x+imgDir[i],"Result/"+imgDir[i])
 
         # keep all windows until "ESC" button is pressed
         cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        
 
 
 # run---------------------------------------------------------------------------------------
@@ -160,25 +165,22 @@ if __name__ == '__main__':
     threads = mp.cpu_count()
     numPerDir = int(math.ceil(size/threads))
     makedir(threads)
-    jobs=[]
-    p = [mp.Process(target=eachdir,args=(x,numPerDir,threads,))for x in range(threads)]
     
-    # Start the threads (i.e. calculate the random number lists)
+    
+    p = [mp.Process(target=eachdir,args=(x,numPerDir,threads,))for x in range(threads)]
     print(p)
     for j in p:
             j.start()
-
-	# Ensure all of the threads have finished
     for j in p:
             j.join()
 
-    w = [mp.Process(target=main,args=(x,threads,))for x in range(threads)]
-    
-    # Start the threads (i.e. calculate the random number lists)
+    os.mkdir("Result")
+
+    w = [mp.Process(target=main,args=(x,numPerDir,))for x in range(threads)]
     print(w)
     for j in w:
             j.start()
-
-	# Ensure all of the threads have finished
     for j in w:
             j.join()
+    print("-------------------Finish Process-------------------")
+    cv2.destroyAllWindows()
