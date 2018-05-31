@@ -6,7 +6,7 @@ import os
 import multiprocessing as mp
 import math
 import shutil
-
+import time
 # initial window position
 posX = 20
 posY = 20
@@ -158,6 +158,7 @@ if __name__ == '__main__':
     # create process to make new folder 
     # eachfolder keep photo by dividing whole photos into them
     # number of folder = number of threads
+    now = time.time()
     p = [mp.Process(target=eachdir,args=(x,numPerDir,threads,imgFile))for x in range(threads)]
     #print(p)
     for j in p:
@@ -180,7 +181,9 @@ if __name__ == '__main__':
     #remove folder that keep original divided  data for better user experience
     for i in range(threads):
         shutil.rmtree("./new_%s/"%i)
-   
+    then = time.time()
+    timeuse = then-now
+    print("Total time using = ",timeuse," seconds ")
     print("Completed Processing : Check RESULT folder")
     print("-------------------Finish Process-------------------")
     
