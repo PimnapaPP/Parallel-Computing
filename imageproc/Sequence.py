@@ -138,11 +138,11 @@ if __name__ == '__main__':
     imgFile = [s for s in overAll if any(xs in s for xs in matchers)]
     imgFile.sort()
     os.mkdir("RESULT")
-    print("--------Welcome to Pepsi Detection Program----------")
+    print("--------Welcome to Pepsi Detection Program-----------")
 
     main(imgFile)
         
     print("Completed Processing : Check RESULT folder")
     print("-------------------Finish Process-------------------")
-    print("Sequencial Time Using : %s seconds ---" % (time.time() - startTime))
+    print("Sequencial Time Using : %s seconds ------" % (time.time() - startTime))
     
