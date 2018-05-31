@@ -141,7 +141,7 @@ if __name__ == '__main__':
     threads = mp.cpu_count()
     numPerDir = int(math.ceil(size/threads))
     os.mkdir("RESULT")
-    print("--------Welcome to Pepsi detection program---------")
+    print("--------Welcome to Pepsi detection program----------")
     print("Number of threads : %s" % threads)
        
     # create process to find each pepsi photo in their folder
@@ -154,5 +154,5 @@ if __name__ == '__main__':
     
     print("Completed Processing : Check RESULT folder")
     print("-------------------Finish Process-------------------")
-    print("Sequencial Time Using : %s seconds ---" % (time.time() - startTime))
+    print("Sequencial Time Using : %s seconds ------" % (time.time() - startTime))
     
