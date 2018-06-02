@@ -154,5 +154,5 @@ if __name__ == '__main__':
     
     print("Completed Processing : Check RESULT folder")
     print("-------------------Finish Process-------------------")
-    print("Sequencial Time Using : %s seconds ------" % (time.time() - startTime))
+    print("Parallel Time Using : %s seconds ------" % (time.time() - startTime))
     
