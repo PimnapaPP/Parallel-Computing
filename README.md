@@ -13,7 +13,7 @@ Git Bash : https://www.git-scm.com
 
 # Installing
 
-To install the program: Have to download 3 of this following packages first
+To install the program: Have to add-on 3 of this following packages in Python first
 
 1.) Opencv-Python
 
