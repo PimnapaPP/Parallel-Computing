@@ -1,4 +1,4 @@
-# Parallel-Computing
+# Pepsi's Image Detection
 
 Video decribing project on Youtube : https://youtu.be/8F8jXJgPWJU
 
@@ -9,6 +9,8 @@ Github : https://github.com/PimnapaPP/Parallel-Computing
 Python 3  for Windows : https://www.python.org/
 
 Git Bash : https://www.git-scm.com
+
+============================================================================================================
 
 
 # Installing
@@ -22,3 +24,12 @@ To install the program: Have to add-on 3 of this following packages in Python fi
 3.) Numpy
 
 *** Install using "pip install <name>"
+  
+============================================================================================================
+
+ # Runing
+ 
+ *Please make sure to have image dataset (supermarket folder) in the same folder with pepsi's detection program
+ 
+ For python version 2.7 : Parallel.py and Sequence.py
+ For python version 3.0 : ParallelWin.py and SequenceWin.py
