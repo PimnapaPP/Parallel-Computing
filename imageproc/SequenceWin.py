@@ -130,7 +130,7 @@ def main(x):
             shutil.copyfile("supermarket/"+x[i],"RESULT/"+x[i])
  
 
-# run---------------------------------------------------------------------------------------
+# run--------------------------------------------------------------------------------------
 if __name__ == '__main__':
     startTime = time.time()
     overAll = os.listdir('./supermarket')
