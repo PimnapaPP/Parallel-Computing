@@ -67,7 +67,7 @@ def detect4skal(hsv):
     #cv2.imshow("target image", img)
 
     return mask
-# create sample mask image window function-------------------------------------------------
+# create sample mask image window function------------------------------------------------
 def createMaskImage(hsv, hue, sat, val):
     imh, imw, channels = hsv.shape  # get image size and the number of channels
     mask = np.zeros((imh, imw, channels), np.uint8) # initialize hsv gradation image with 0
