@@ -10,6 +10,7 @@ Python 3  for Windows : https://www.python.org/
 
 Git Bash : https://www.git-scm.com
 
+
 ==============================================================================================
 
 
@@ -25,10 +26,12 @@ To install the program: Have to add-on 3 of this following packages in Python fi
 
 *** Install using "pip install <name>"
   
+  
 ==============================================================================================
  # Runing
  
  *Please make sure to have image dataset (supermarket folder) in the same folder with pepsi's detection program
  
  For python version 2.7 : Parallel.py and Sequence.py
+ 
  For python version 3.0 : ParallelWin.py and SequenceWin.py
