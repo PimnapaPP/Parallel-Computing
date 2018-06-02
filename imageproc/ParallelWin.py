@@ -11,7 +11,7 @@ import time
 posX = 20
 posY = 20
 
-# detect "pepsi" object function-------------------------------------------------
+# detect "pepsi" object function------------------------------------------------
 def detect4skal(hsv):
     global posX, posY
     global pepsi
