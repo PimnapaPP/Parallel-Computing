@@ -10,7 +10,7 @@ Python 3  for Windows : https://www.python.org/
 
 Git Bash : https://www.git-scm.com
 
-============================================================================================================
+==============================================================================================
 
 
 # Installing
@@ -25,8 +25,7 @@ To install the program: Have to add-on 3 of this following packages in Python fi
 
 *** Install using "pip install <name>"
   
-============================================================================================================
-
+==============================================================================================
  # Runing
  
  *Please make sure to have image dataset (supermarket folder) in the same folder with pepsi's detection program
